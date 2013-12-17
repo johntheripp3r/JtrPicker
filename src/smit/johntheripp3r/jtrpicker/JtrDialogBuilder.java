@@ -1,15 +1,12 @@
 /*
  * Copyright [2013] Smit Choksi
  * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
- * 
  */
 
 package smit.johntheripp3r.jtrpicker;
@@ -106,6 +103,7 @@ public class JtrDialogBuilder extends Builder
 		TextView tv = new TextView(mContext);
 		tv.setTextSize(23.5f);
 		tv.setText(text);
+		tv.setPadding(2, 0, 2, 0);
 		this.mLinearLayout.addView(tv);
 		return this;
 	}
@@ -150,24 +148,27 @@ public class JtrDialogBuilder extends Builder
 		return this;
 	}
 	
+	public void refreshPickers()
+	{
+		if(this.mNumberPickers.size() == mLinearLayout.getChildCount())
+		{
+			List<NumberPicker> pickers = new ArrayList<NumberPicker>();
+			for(int i = 0; i < mLinearLayout.getChildCount(); i++)
+			{
+				View childAt = mLinearLayout.getChildAt(i);
+				if(childAt instanceof NumberPicker)
+				{
+					pickers.add((NumberPicker) childAt);
+				}
+			}
+			this.mNumberPickers = pickers;
+		}
+	}
+	
 	public List<NumberPicker> getAllPickers()
 	{
 		refreshPickers();
 		return mNumberPickers;
-	}
-	
-	public void refreshPickers()
-	{
-		List<NumberPicker> pickers = new ArrayList<NumberPicker>();
-		for(int i = 0; i < mLinearLayout.getChildCount(); i++)
-		{
-			View childAt = mLinearLayout.getChildAt(i);
-			if(childAt instanceof NumberPicker)
-			{
-				pickers.add((NumberPicker) childAt);
-			}
-		}
-		this.mNumberPickers = pickers;
 	}
 	
 	public NumberPicker getPickerAt(int index)
